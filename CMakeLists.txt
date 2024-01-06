@@ -10,7 +10,9 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(SFMLShapes src/main.cpp)
+include_directories(SFMLShapes ${PROJECT_SOURCE_DIR}/include )
+
+add_executable(SFMLShapes src/main.cpp "include/shapes.h")
 target_link_libraries(SFMLShapes PRIVATE sfml-graphics)
 target_compile_features(SFMLShapes PRIVATE cxx_std_17)
 
