@@ -12,7 +12,7 @@ FetchContent_MakeAvailable(SFML)
 
 include_directories(SFMLShapes ${PROJECT_SOURCE_DIR}/include )
 
-add_executable(SFMLShapes src/main.cpp "include/shapes.h" "include/utils.h" "src/shapes.cpp")
+add_executable(SFMLShapes src/main.cpp "src/shapes.cpp")
 target_link_libraries(SFMLShapes PRIVATE sfml-graphics)
 target_compile_features(SFMLShapes PRIVATE cxx_std_17)
 

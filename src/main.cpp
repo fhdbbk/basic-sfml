@@ -1,4 +1,5 @@
 #include "shapes.h"
+#include <memory>
 
 int main()
 {
@@ -6,12 +7,17 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1080, 720), "Window");
     window.setFramerateLimit(144);
 
-    AShape* circle = new Circle(50.0f, sColor::YELLOW, 0.1, 0.1, sf::Vector2f(100.0f, 100.0f));
-    AShape* rectangle = new Rectangle(150, 300, sColor::RED, -0.2, 0.3, sf::Vector2(700.0f, 50.0f));
-    /*sf::CircleShape circle(50);
-    circle.setFillColor(sf::Color::Green);
-    circle.setPosition(sf::Vector2f(100.0f, 100.0f));
-    float circleSpeed = 0.1f;*/
+    std::vector<std::shared_ptr<AShape>> myShapes;
+
+    //AShape* circle = new Circle(50.0f, sColor::YELLOW, 0.1, 0.1, sf::Vector2f(100.0f, 100.0f));
+    //AShape* rectangle = new Rectangle(150, 300, sColor::RED, -0.2, 0.3, sf::Vector2(700.0f, 50.0f));
+
+    std::shared_ptr<AShape> circle = std::make_shared<Circle>(50.0f, sColor::YELLOW, 0.1, 0.1, sf::Vector2f(100.0f, 100.0f));
+    std::shared_ptr<AShape> rectangle = std::make_shared<Rectangle>(150, 300, sColor::RED, -0.2, 0.3, sf::Vector2(700.0f, 50.0f));
+
+    myShapes.push_back(circle);
+    myShapes.push_back(rectangle);
+    
     while (window.isOpen())
     {
         sf::Event event;
@@ -40,14 +46,22 @@ int main()
             }
         }
         //circle.setPosition(sf::Vector2f(circle.getPosition().x + circleSpeed, circle.getPosition().y + circleSpeed));
-        circle->updatePosition();
-        rectangle->updatePosition();
+        for (auto& shape : myShapes)
+        {
+            shape->updatePosition();
+        }
+        //circle->updatePosition();
+        //rectangle->updatePosition();
         window.clear();
-        window.draw(*(circle->shape));
-        window.draw(*(rectangle->shape));
+        for (auto& shape : myShapes)
+        {
+            window.draw(*(shape->shape));
+        }
+        //window.draw(*(circle->shape));
+        //window.draw(*(rectangle->shape));
         window.display();
     }
 
-    delete circle;
-    delete rectangle;
+    //delete circle;
+    //delete rectangle;
 }
